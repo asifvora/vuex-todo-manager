@@ -44,10 +44,7 @@ export default {
       const { title } = this.form;
       const newTodo = { title: title, completed: false };
       this.addTodo(newTodo);
-      console.log("this.isLoading", this.isLoading);
-      if (!this.isLoading) {
-        this.resetForm();
-      }
+      this.resetForm();
     },
 
     resetForm() {

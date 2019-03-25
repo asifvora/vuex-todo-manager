@@ -13,7 +13,13 @@ const getters = {
 const actions = {
     async fetchTodos({ commit }) {
         commit('loader', true);
-        const response = await request.get(`todos?_limit=${10}`);
+        const response = await request.get(`todos?_limit=${5}`);
+        commit('setTodos', response);
+        commit('loader', false);
+    },
+    async filterTodos({ commit }, limit) {
+        commit('loader', true);
+        const response = await request.get(`todos?_limit=${limit}`);
         commit('setTodos', response);
         commit('loader', false);
     },
@@ -28,6 +34,12 @@ const actions = {
         await request.delete(`todos/${id}`);
         commit('deleteTodo', id);
         commit('loader', false);
+    },
+    async updateTodo({ commit }, updateTodo) {
+        commit('loader', true);
+        const response = await request.put(`todos/${updateTodo.id}`, updateTodo);
+        commit('updateTodo', response);
+        commit('loader', false);
     }
 };
 
@@ -36,6 +48,12 @@ const mutations = {
     setTodos: (state, todos) => state.todos = todos,
     addTodo: (state, todo) => state.todos.unshift(todo),
     deleteTodo: (state, id) => state.todos = state.todos.filter(todo => todo.id !== id),
+    updateTodo: (state, updateTodo) => {
+        const index = state.todos.findIndex(todo => todo.id === updateTodo.id);
+        if (index !== -1) {
+            state.todos[index] = updateTodo;
+        }
+    },
 };
 
 export default {
