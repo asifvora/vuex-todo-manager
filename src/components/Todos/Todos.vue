@@ -2,7 +2,10 @@
   <div>
     <h3>Todos</h3>
     <div class="todos">
-      <div class="todo" v-for="todo in allTodos" :key="todo.id">{{ todo.title }}</div>
+      <div class="todo" v-for="todo in allTodos" :key="todo.id">
+        {{ todo.title }}
+        <i class="fas fa-trash-alt" @click="onDelete(todo.id)"></i>
+      </div>
     </div>
     <FullPageLoader v-bind:isShow="isLoading"/>
   </div>
@@ -17,10 +20,17 @@ export default {
   components: {
     FullPageLoader
   },
+
   methods: {
-    ...mapActions(["fetchTodos"])
+    ...mapActions(["fetchTodos", "deleteTodo"]),
+    
+    onDelete(id) {
+      this.deleteTodo(id);
+    }
   },
+
   computed: mapGetters(["allTodos", "isLoading"]),
+
   created() {
     this.fetchTodos();
   }
