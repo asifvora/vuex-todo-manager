@@ -1,15 +1,18 @@
-import { request } from '../../utils/HttpRequests';
+import { request } from '../../../utils/HttpRequests';
 
+// initial state
 const state = {
     todos: [],
     isLoading: false
 };
 
+// getters
 const getters = {
     allTodos: (state) => state.todos,
     isLoading: (state) => state.isLoading
 };
 
+// actions
 const actions = {
     async fetchTodos({ commit }) {
         commit('loader', true);
@@ -43,6 +46,7 @@ const actions = {
     }
 };
 
+// mutations
 const mutations = {
     loader: (state, isLoading) => state.isLoading = isLoading,
     setTodos: (state, todos) => state.todos = todos,
