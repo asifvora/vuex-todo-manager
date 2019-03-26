@@ -13,7 +13,7 @@
     <div class="todos">
       <div
         class="todo"
-        v-for="todo in allTodos"
+        v-for="todo in todos"
         :key="todo.id"
         v-bind:class="{'is-complete':todo.completed}"
         @dblclick="onDblClick(todo)"
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapState, mapActions } from "vuex";
 import FullPageLoader from "../FullPageLoader/FullPageLoader.vue";
 
 export default {
@@ -37,7 +37,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(["fetchTodos", "deleteTodo", "updateTodo"]),
+    ...mapActions("Todos", ["fetchTodos", "deleteTodo", "updateTodo"]),
+    // ...mapActions(["fetchTodos", "deleteTodo", "updateTodo"]), // with mapGetters
 
     onDblClick(todo) {
       const updTodo = {
@@ -53,7 +54,10 @@ export default {
     }
   },
 
-  computed: mapGetters(["allTodos", "isLoading"]),
+  computed: {
+    // ...mapGetters(["allTodos", "isLoading"]), // with mapGetters
+    ...mapState("Todos", ["isLoading", "todos"])
+  },
 
   created() {
     this.fetchTodos();
