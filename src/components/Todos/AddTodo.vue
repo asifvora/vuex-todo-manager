@@ -17,7 +17,7 @@
 
 <script>
 import { required } from "vuelidate/lib/validators";
-import { mapGetters, mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "AddTodo",
@@ -36,7 +36,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["addTodo"]),
+    ...mapActions("Todos", ["addTodo"]),
 
     onSubmit() {
       this.$v.form.$touch();
@@ -53,7 +53,7 @@ export default {
     }
   },
 
-  computed: mapGetters(["isLoading"])
+  computed: mapState("Todos", ["isLoading"])
 };
 </script>
 

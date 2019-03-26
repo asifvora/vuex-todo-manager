@@ -17,7 +17,7 @@ import { mapActions } from "vuex";
 
 export default {
   name: "FilterTodos",
-  methods: mapActions(["filterTodos"])
+  methods: mapActions("Todos", ["filterTodos"])
 };
 </script>
 
